@@ -1,0 +1,40 @@
+@model List<TuyenDungViecLam.Models.Employer>
+@{
+    ViewData["Title"] = "Danh sách công ty";
+}
+
+<div class="container">
+    <div class="mb-4">
+        <h1 class="fw-bold">Danh sách công ty</h1>
+        <p class="text-muted">Khám phá các công ty hàng đầu đang tuyển dụng</p>
+    </div>
+    
+    <div class="row">
+        @foreach (var employer in Model)
+        {
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body text-center">
+                        <img src="@employer.Logo" alt="@employer.Name" class="rounded mb-3" style="width: 80px; height: 80px; object-fit: cover;">
+                        <h5 class="card-title fw-bold">@employer.Name</h5>
+                        <p class="text-muted small mb-3">@employer.Industry</p>
+                        <p class="card-text">@employer.Description.Substring(0, Math.Min(100, employer.Description.Length))...</p>
+                        
+                        <div class="mb-3">
+                            <span class="badge bg-light text-dark me-2">
+                                <i class="fas fa-users"></i> @employer.Size
+                            </span>
+                            <span class="badge bg-primary">
+                                <i class="fas fa-briefcase"></i> @employer.Jobs.Count việc làm
+                            </span>
+                        </div>
+                        
+                        <a asp-controller="Companies" asp-action="Details" asp-route-id="@employer.Id" class="btn btn-outline-primary">
+                            Xem chi tiết
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

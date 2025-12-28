@@ -1,0 +1,142 @@
+@model TuyenDungViecLam.Models.Job
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <!-- Job Header -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="@Model.Logo" alt="@Model.Company" class="rounded me-3" style="width: 80px; height: 80px; object-fit: cover;">
+                        <div>
+                            <h1 class="h3 fw-bold text-primary mb-1">@Model.Title</h1>
+                            <h5 class="text-muted mb-2">@Model.Company</h5>
+                            <div class="d-flex flex-wrap gap-2">
+                                <span class="badge bg-light text-dark">
+                                    <i class="fas fa-map-marker-alt"></i> @Model.Location
+                                </span>
+                                <span class="badge bg-success">
+                                    <i class="fas fa-dollar-sign"></i> @Model.Salary
+                                </span>
+                                <span class="badge bg-info">
+                                    <i class="fas fa-briefcase"></i> @Model.Type
+                                </span>
+                                <span class="badge bg-secondary">@Model.Category</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="text-muted">Đăng ngày: @Model.PostedDate.ToString("dd/MM/yyyy")</small>
+                        <a asp-action="Apply" asp-route-id="@Model.Id" class="btn btn-primary btn-lg">
+                            <i class="fas fa-paper-plane"></i> Ứng tuyển ngay
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Job Description -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"><i class="fas fa-info-circle"></i> Mô tả công việc</h5>
+                </div>
+                <div class="card-body">
+                    <p>@Model.Description</p>
+                </div>
+            </div>
+            
+            <!-- Requirements -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"><i class="fas fa-list-check"></i> Yêu cầu công việc</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        @foreach (var requirement in Model.Requirements)
+                        {
+                            <li class="mb-2">
+                                <i class="fas fa-check-circle text-success me-2"></i>@requirement
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Benefits -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"><i class="fas fa-gift"></i> Quyền lợi</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        @foreach (var benefit in Model.Benefits)
+                        {
+                            <li class="mb-2">
+                                <i class="fas fa-star text-warning me-2"></i>@benefit
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="col-md-4">
+            <!-- Apply Card -->
+            <div class="card shadow-sm mb-4 border-primary">
+                <div class="card-header bg-primary text-white text-center">
+                    <h5 class="mb-0">Ứng tuyển ngay</h5>
+                </div>
+                <div class="card-body text-center">
+                    <p class="mb-3">Gửi hồ sơ của bạn để ứng tuyển vào vị trí này</p>
+                    <a asp-action="Apply" asp-route-id="@Model.Id" class="btn btn-primary btn-lg w-100 mb-2">
+                        <i class="fas fa-paper-plane"></i> Ứng tuyển
+                    </a>
+                    <button class="btn btn-outline-secondary w-100">
+                        <i class="fas fa-heart"></i> Lưu việc làm
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Company Info -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light">
+                    <h6 class="mb-0"><i class="fas fa-building"></i> Thông tin công ty</h6>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <img src="@Model.Logo" alt="@Model.Company" class="rounded" style="width: 60px; height: 60px; object-fit: cover;">
+                        <h6 class="mt-2 fw-bold">@Model.Company</h6>
+                    </div>
+                    <a asp-controller="Companies" asp-action="Details" asp-route-id="@Model.EmployerId" class="btn btn-outline-primary w-100">
+                        Xem thông tin công ty
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Job Stats -->
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h6 class="mb-0"><i class="fas fa-chart-bar"></i> Thống kê</h6>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Lượt xem:</span>
+                        <span class="fw-bold">245</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Ứng viên:</span>
+                        <span class="fw-bold">@Model.Applications.Count</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Trạng thái:</span>
+                        <span class="badge bg-success">Đang tuyển</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+@{
+    ViewData["Title"] = "Quick Login Test";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4>Quick Login Test</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5>Admin Login</h5>
+                            <form method="post" action="/Account/Login">
+                                <input type="hidden" name="Email" value="admin@test.com" />
+                                <input type="hidden" name="Password" value="123456" />
+                                <button type="submit" class="btn btn-danger btn-block">Login as Admin</button>
+                            </form>
+                        </div>
+                        <div class="col-md-4">
+                            <h5>Employer Login</h5>
+                            <form method="post" action="/Account/Login">
+                                <input type="hidden" name="Email" value="employer@test.com" />
+                                <input type="hidden" name="Password" value="123456" />
+                                <button type="submit" class="btn btn-success btn-block">Login as Employer</button>
+                            </form>
+                        </div>
+                        <div class="col-md-4">
+                            <h5>Candidate Login</h5>
+                            <form method="post" action="/Account/Login">
+                                <input type="hidden" name="Email" value="candidate@test.com" />
+                                <input type="hidden" name="Password" value="123456" />
+                                <button type="submit" class="btn btn-primary btn-block">Login as Candidate</button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="alert alert-info">
+                        <h6>Session Info:</h6>
+                        <p><strong>Email:</strong> @Context.Session.GetString("UserEmail")</p>
+                        <p><strong>Role:</strong> @Context.Session.GetString("UserRole")</p>
+                    </div>
+                    
+                    <a href="/Account/Logout" class="btn btn-warning">Logout</a>
+                    <a href="/Account/Login" class="btn btn-secondary">Normal Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

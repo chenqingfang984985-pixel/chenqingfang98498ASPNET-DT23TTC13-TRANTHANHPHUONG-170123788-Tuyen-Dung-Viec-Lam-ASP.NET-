@@ -1,0 +1,68 @@
+@model TuyenDungViecLam.Models.ApplyJobViewModel
+@{
+    ViewData["Title"] = "Ứng tuyển - " + Model.JobTitle;
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="fas fa-paper-plane"></i> Ứng tuyển vào vị trí</h4>
+                    <p class="mb-0 mt-2"><strong>@Model.JobTitle</strong> tại <strong>@Model.Company</strong></p>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Apply" method="post" enctype="multipart/form-data">
+                        <input asp-for="JobId" type="hidden" />
+                        <input asp-for="JobTitle" type="hidden" />
+                        <input asp-for="Company" type="hidden" />
+                        
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="FullName" class="form-label">Họ và tên *</label>
+                                <input asp-for="FullName" class="form-control" placeholder="Nhập họ và tên">
+                                <span asp-validation-for="FullName" class="text-danger"></span>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Email" class="form-label">Email *</label>
+                                <input asp-for="Email" class="form-control" placeholder="Nhập email">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="Phone" class="form-label">Số điện thoại *</label>
+                            <input asp-for="Phone" class="form-control" placeholder="Nhập số điện thoại">
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="Resume" class="form-label">CV/Resume</label>
+                            <input asp-for="Resume" type="file" class="form-control" accept=".pdf,.doc,.docx">
+                            <div class="form-text">Chấp nhận file PDF, DOC, DOCX (tối đa 5MB)</div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label asp-for="CoverLetter" class="form-label">Thư xin việc *</label>
+                            <textarea asp-for="CoverLetter" class="form-control" rows="6" 
+                                placeholder="Viết thư xin việc của bạn. Hãy giới thiệu bản thân, kinh nghiệm và lý do bạn phù hợp với vị trí này..."></textarea>
+                            <span asp-validation-for="CoverLetter" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Details" asp-route-id="@Model.JobId" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Quay lại
+                            </a>
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-paper-plane"></i> Gửi hồ sơ ứng tuyển
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

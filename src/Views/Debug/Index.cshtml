@@ -1,0 +1,85 @@
+@{
+    ViewData["Title"] = "Debug Session";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h2>Debug Session Information</h2>
+            
+            <div class="card mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5>Current Session Data</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Session ID:</strong> @ViewBag.SessionId</p>
+                    <p><strong>User Email:</strong> @ViewBag.UserEmail</p>
+                    <p><strong>User Role:</strong> @ViewBag.UserRole</p>
+                    <p><strong>All Session Keys:</strong> @string.Join(", ", ViewBag.SessionKeys ?? new List<string>())</p>
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5>Quick Login Test</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <form method="post" action="/Debug/SetSession">
+                                <input type="hidden" name="email" value="admin@test.com" />
+                                <input type="hidden" name="role" value="Admin" />
+                                <button type="submit" class="btn btn-danger btn-block">Set Admin Session</button>
+                            </form>
+                        </div>
+                        <div class="col-md-4">
+                            <form method="post" action="/Debug/SetSession">
+                                <input type="hidden" name="email" value="employer@test.com" />
+                                <input type="hidden" name="role" value="Employer" />
+                                <button type="submit" class="btn btn-success btn-block">Set Employer Session</button>
+                            </form>
+                        </div>
+                        <div class="col-md-4">
+                            <form method="post" action="/Debug/SetSession">
+                                <input type="hidden" name="email" value="candidate@test.com" />
+                                <input type="hidden" name="role" value="Candidate" />
+                                <button type="submit" class="btn btn-primary btn-block">Set Candidate Session</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-header bg-warning text-dark">
+                    <h5>Test Login Form</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="/Account/Login">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input name="Email" type="email" class="form-control" value="employer@test.com">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Password</label>
+                                    <input name="Password" type="password" class="form-control" value="123456">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Test Login</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <a href="/Debug/ClearSession" class="btn btn-warning">Clear Session</a>
+                <a href="/Account/Login" class="btn btn-secondary">Go to Login</a>
+                <a href="/" class="btn btn-info">Go to Home</a>
+            </div>
+        </div>
+    </div>
+</div>

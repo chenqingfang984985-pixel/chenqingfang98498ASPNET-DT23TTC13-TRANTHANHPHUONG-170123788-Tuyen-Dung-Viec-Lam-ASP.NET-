@@ -1,0 +1,121 @@
+@model List<TuyenDungViecLam.Models.Job>
+@{
+    ViewData["Title"] = "Dashboard Nhà Tuyển Dụng";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h6><i class="fas fa-building"></i> Menu Nhà Tuyển Dụng</h6>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a href="/Employer/Dashboard" class="list-group-item list-group-item-action active">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                    <a href="/Employer/PostJob" class="list-group-item list-group-item-action">
+                        <i class="fas fa-plus"></i> Đăng tin tuyển dụng
+                    </a>
+                    <a href="/Employer/Applications" class="list-group-item list-group-item-action">
+                        <i class="fas fa-file-alt"></i> Đơn ứng tuyển
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-9">
+            <h2><i class="fas fa-building"></i> Dashboard Nhà Tuyển Dụng</h2>
+            
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="card bg-primary text-white">
+                        <div class="card-body">
+                            <h4>@ViewBag.TotalJobs</h4>
+                            <p>Tổng tin đăng</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-success text-white">
+                        <div class="card-body">
+                            <h4>@ViewBag.ActiveJobs</h4>
+                            <p>Tin đang hoạt động</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-info text-white">
+                        <div class="card-body">
+                            <h4>15</h4>
+                            <p>Ứng viên mới</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h5>Tin tuyển dụng của bạn</h5>
+                    <a href="/Employer/PostJob" class="btn btn-primary btn-sm float-end">
+                        <i class="fas fa-plus"></i> Đăng tin mới
+                    </a>
+                </div>
+                <div class="card-body">
+                    @if (Model.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Tiêu đề</th>
+                                        <th>Địa điểm</th>
+                                        <th>Lương</th>
+                                        <th>Ngày đăng</th>
+                                        <th>Trạng thái</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var job in Model)
+                                    {
+                                        <tr>
+                                            <td>@job.Title</td>
+                                            <td>@job.Location</td>
+                                            <td>@job.Salary</td>
+                                            <td>@job.PostedDate.ToString("dd/MM/yyyy")</td>
+                                            <td>
+                                                @if (job.IsActive)
+                                                {
+                                                    <span class="badge bg-success">Hoạt động</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-secondary">Tạm dừng</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                <a href="/Jobs/Details/@job.Id" class="btn btn-sm btn-outline-primary">Xem</a>
+                                                <button class="btn btn-sm btn-outline-warning">Sửa</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-4">
+                            <i class="fas fa-briefcase fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">Bạn chưa có tin tuyển dụng nào</p>
+                            <a href="/Employer/PostJob" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Đăng tin đầu tiên
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

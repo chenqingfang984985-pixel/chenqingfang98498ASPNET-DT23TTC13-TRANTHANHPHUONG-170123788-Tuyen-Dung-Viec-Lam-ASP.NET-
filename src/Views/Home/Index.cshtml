@@ -1,0 +1,146 @@
+﻿@model List<TuyenDungViecLam.Models.Job>
+@{
+    ViewData["Title"] = "Trang chủ";
+    var categories = ViewBag.Categories as List<TuyenDungViecLam.Models.Category>;
+}
+
+<!-- Hero Section -->
+<div class="hero-section text-white py-5 mb-5 rounded-4 fade-in">
+    <div class="container text-center">
+        <h1 class="display-4 fw-bold mb-3">Tìm kiếm công việc mơ ước của bạn</h1>
+        <p class="lead mb-4">Hàng ngàn cơ hội việc làm đang chờ bạn</p>
+        
+        <!-- Search Form -->
+        <form asp-controller="Jobs" asp-action="Index" method="get" class="row g-3 justify-content-center">
+            <div class="col-md-4">
+                <input type="text" name="keyword" class="form-control form-control-lg" placeholder="Tên công việc, công ty...">
+            </div>
+            <div class="col-md-3">
+                <input type="text" name="location" class="form-control form-control-lg" placeholder="Địa điểm">
+            </div>
+            <div class="col-md-3">
+                <select name="category" class="form-select form-select-lg">
+                    <option value="">Tất cả ngành nghề</option>
+                    @if (categories != null)
+                    {
+                        @foreach (var category in categories)
+                        {
+                            <option value="@category.Name">@category.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-light btn-lg w-100">
+                    <i class="fas fa-search"></i> Tìm kiếm
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Stats Section -->
+<div class="row mb-5 slide-up">
+    <div class="col-md-3 mb-4">
+        <div class="stats-card">
+            <div class="icon">
+                <i class="fas fa-briefcase"></i>
+            </div>
+            <h3 class="fw-bold mb-2">@Model.Count</h3>
+            <p class="text-muted mb-0">Việc làm</p>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="stats-card">
+            <div class="icon">
+                <i class="fas fa-building"></i>
+            </div>
+            <h3 class="fw-bold mb-2">50+</h3>
+            <p class="text-muted mb-0">Công ty</p>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="stats-card">
+            <div class="icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3 class="fw-bold mb-2">1000+</h3>
+            <p class="text-muted mb-0">Ứng viên</p>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="stats-card">
+            <div class="icon">
+                <i class="fas fa-handshake"></i>
+            </div>
+            <h3 class="fw-bold mb-2">500+</h3>
+            <p class="text-muted mb-0">Kết nối thành công</p>
+        </div>
+    </div>
+</div>
+
+<!-- Featured Jobs -->
+<div class="mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">Việc làm nổi bật</h2>
+        <a asp-controller="Jobs" asp-action="Index" class="btn btn-outline-primary">Xem tất cả</a>
+    </div>
+    
+    <div class="row">
+        @foreach (var job in Model)
+        {
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 job-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="@job.Logo" alt="@job.Company" class="company-logo me-3">
+                            <div>
+                                <h6 class="card-title mb-1 fw-bold">@job.Title</h6>
+                                <p class="text-muted mb-0">@job.Company</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <span class="badge bg-light text-dark me-2">
+                                <i class="fas fa-map-marker-alt"></i> @job.Location
+                            </span>
+                            <span class="badge bg-success">
+                                <i class="fas fa-dollar-sign"></i> @job.Salary
+                            </span>
+                        </div>
+                        
+                        <p class="card-text text-muted small">@job.Description.Substring(0, Math.Min(100, job.Description.Length))...</p>
+                        
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">@job.PostedDate.ToString("dd/MM/yyyy")</small>
+                            <a asp-controller="Jobs" asp-action="Details" asp-route-id="@job.Id" class="btn btn-primary btn-sm">Xem chi tiết</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Categories Section -->
+@if (categories != null)
+{
+    <div class="mb-5">
+        <h2 class="fw-bold mb-4">Ngành nghề phổ biến</h2>
+        <div class="row">
+            @foreach (var category in categories)
+            {
+                <div class="col-md-4 col-lg-2 mb-3">
+                    <a asp-controller="Jobs" asp-action="Index" asp-route-category="@category.Name" class="text-decoration-none">
+                        <div class="card text-center border-0 shadow-sm h-100">
+                            <div class="card-body">
+                                <h6 class="card-title">@category.Name</h6>
+                                <p class="text-muted small mb-0">@category.JobCount việc làm</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+}
